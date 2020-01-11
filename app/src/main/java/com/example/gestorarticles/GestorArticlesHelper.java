@@ -26,7 +26,6 @@ public class GestorArticlesHelper extends SQLiteOpenHelper {
                         "stock INTEGER)";
 
         db.execSQL(CREATE_GESTORARTICLES);
-
     }
 
     @Override

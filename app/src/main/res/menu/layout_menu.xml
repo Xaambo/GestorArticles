@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/btnAdd"
+        android:title="ADD"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/ic_filtre"
+        app:showAsAction="always"
+        android:title="Menu">
+
+        <menu>
+
+            <item android:id="@+id/noFiltre"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Tots els artícles" />
+
+            <item android:id="@+id/filtreStock"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Artícles amb Stock" />
+
+            <item android:id="@+id/filtreNoStock"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="Artícles sense Stock" />
+
+        </menu>
+
+    </item>
+
+    <!--<item
+        android:id="@+id/btnAdd"
+        android:title="ADD"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/btnStock"
+        android:title="Articles amb Stock" />
+
+    <item
+        android:id="@+id/btnNoStock"
+        android:title="Articles sense Stock" />-->
+
+</menu>
