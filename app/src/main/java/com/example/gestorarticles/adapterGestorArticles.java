@@ -5,14 +5,19 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
     
     private static final String noStock = "#BFD78290";
     private static final String wStock = "#FFFFFF";
 
+    private  MainActivity gestorArticles;
+
     public adapterGestorArticles(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
         super(context, layout, c, from, to, flags);
+        gestorArticles = (MainActivity) context;
     }
 
     @Override
@@ -31,6 +36,26 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
         else {
             view.setBackgroundColor(Color.parseColor(wStock));
         }
+
+        // Capturem botons
+        ImageView btnMensage = view.findViewById(R.id.ivBorrar);
+
+        btnMensage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Busco la ROW
+                View row = (View) v.getParent();
+                // Busco el ListView
+                ListView lv = (ListView) row.getParent();
+                // Busco quina posicio ocupa la Row dins de la ListView
+                int position = lv.getPositionForView(row);
+
+                // Carrego la linia del cursor de la posició.
+                Cursor linia = (Cursor) getItem(position);
+
+                gestorArticles.eliminarArticle(linia.getInt(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID)));
+            }
+        });
 
         return view;
     }

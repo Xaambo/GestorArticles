@@ -2,6 +2,8 @@ package com.example.gestorarticles;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,25 +22,25 @@ public class MainActivity extends AppCompatActivity {
     private static int ARTICLE_UPDATE = 2;
 
     private GestorArticlesDataSource bd;
-    private adapterGestorArticles scTasks = new adapterGestorArticles(this, R.layout.row_todolisticon, cursorTasks, from, to, 1);
+    private adapterGestorArticles scTasks;
     private filtreArticles filterActual;
 
-    private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE, GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.GESTORARTICLES_PVP, GestorArticlesDataSource.GESTORARTICLES_STOCK};
-    private static int[] to = new int[]{R.id.lblTitulo, R.id.lblDescription, R.id.lblPriority, R.id.lblState};
+    private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE, GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.GESTORARTICLES_STOCK};
+    private static int[] to = new int[]{R.id.tvCodiArticle, R.id.tvDescripcio, R.id.tvNumUnitats};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("ToolBar & Adapter Icon");
+        setTitle("Articles");
         bd = new GestorArticlesDataSource(this);
 
         filterActual = filtreArticles.FILTER_ALL;
 
         Cursor cursorTasks = bd.articles();
 
-        scTasks = new adapterGestorArticles(this, R.layout.row_todolisticon, cursorTasks, from, to, 1);
+        scTasks = new adapterGestorArticles(this, R.layout.layout_article, cursorTasks, from, to, 1);
 
         ListView lv = findViewById(R.id.lvArticles);
         lv.setAdapter(scTasks);
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void carregaArticles() {
 
-        // Demanem totes les tasques
         Cursor cursorTasks = null;
 
         // Demanem les tasques depenen del filtre que s'estigui aplicant
@@ -141,6 +142,23 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i,ARTICLE_UPDATE);
     }
 
+    public void eliminarArticle(final int _id) {
+        // Pedimos confirmación
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("¿Desitja eliminar la tasca?");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                bd.delete(_id);
+                carregaArticles();
+            }
+        });
+
+        builder.setNegativeButton("No", null);
+
+        builder.show();
+    }
+
     private void filtreOff() {
         // Demanem totes les tasques finalitzades
         Cursor cursorTasks = bd.articles();
@@ -154,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.lvArticles);
         lv.setSelection(0);
 
-        Snackbar.make(findViewById(android.R.id.content), "Filtre apagat...", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(android.R.id.content), "Ensenyant tots els articles...", Snackbar.LENGTH_LONG).show();
     }
 
     private void filtreStock() {

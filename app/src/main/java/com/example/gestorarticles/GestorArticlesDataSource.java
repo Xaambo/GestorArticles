@@ -1,5 +1,6 @@
 package com.example.gestorarticles;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -58,7 +59,40 @@ public class GestorArticlesDataSource {
         return dbR.rawQuery(query, args);
     }
 
-    // MODIFICACIO DB
+    public Cursor article(long id) {
+        /* Consulta de tots els articles amb Stock */
+        String query = "SELECT * FROM gestorarticles WHERE _id = ?";
+        String[] args = new String[] {String.valueOf(id)};
+        return dbR.rawQuery(query, args);
+    }
 
+    // MODIFICACIO DB
+    public long insert(String codiArticle, String descricpio, float pvp, int stock) {
+        // Creem una nova tasca i retornem el id crear per si el necessiten
+        ContentValues values = new ContentValues();
+        values.put(GESTORARTICLES_CODIARTICLE, codiArticle);
+        values.put(GESTORARTICLES_DESCRIPCION, descricpio);
+        values.put(GESTORARTICLES_PVP, pvp);
+        values.put(GESTORARTICLES_STOCK, stock);
+
+        return dbW.insert(table_GESTORARTICLES,null,values);
+    }
+
+    public void update(long id, String codiArticle, float pvp, int stock) {
+        // Modifiquem els valors de las tasca amb clau primària "id"
+        ContentValues values = new ContentValues();
+        values.put(GESTORARTICLES_CODIARTICLE, codiArticle);
+        values.put(GESTORARTICLES_PVP,pvp);
+        values.put(GESTORARTICLES_STOCK,stock);
+
+        String[] args = new String[] {String.valueOf(id)};
+        dbW.update(table_GESTORARTICLES,values, GESTORARTICLES_ID + " = ?", args);
+    }
+
+    public void delete(long id) {
+        // Eliminem l'artile amb clau primària "id"
+        String[] args = new String[] {String.valueOf(id)};
+        dbW.delete(table_GESTORARTICLES,GESTORARTICLES_ID + " = ?", args);
+    }
 
 }

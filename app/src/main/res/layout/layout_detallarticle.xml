@@ -21,7 +21,7 @@
         android:layout_marginBottom="7dp">
 
         <TextView
-            android:id="@+id/codiArticle"
+            android:id="@+id/tvCodiArticle"
             android:text="Codi Article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:ems="10"
-            android:id="@+id/edtTitulo"
+            android:id="@+id/edtCodiArticle"
             />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/edtPreu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
