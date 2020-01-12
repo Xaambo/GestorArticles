@@ -5,6 +5,7 @@
     <item
         android:id="@+id/btnAdd"
         android:title="ADD"
+        android:icon="@drawable/ic_add"
         app:showAsAction="ifRoom" />
 
     <item
@@ -16,15 +17,12 @@
         <menu>
 
             <item android:id="@+id/noFiltre"
-                android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Tots els artícles" />
 
             <item android:id="@+id/filtreStock"
-                android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Artícles amb Stock" />
 
             <item android:id="@+id/filtreNoStock"
-                android:icon="@android:drawable/ic_menu_help"
                 android:title="Artícles sense Stock" />
 
         </menu>

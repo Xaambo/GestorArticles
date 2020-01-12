@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class ArticleDataSource {
+public class GestorArticlesDataSource {
 
     public static final String table_GESTORARTICLES = "gestorarticles";
     public static final String GESTORARTICLES_ID = "_id";
@@ -17,7 +17,7 @@ public class ArticleDataSource {
     private SQLiteDatabase dbW, dbR;
 
     // CONSTRUCTOR
-    public ArticleDataSource(Context ctx) {
+    public GestorArticlesDataSource(Context ctx) {
         // DB Connection
         dbHelper = new GestorArticlesHelper(ctx);
 

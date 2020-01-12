@@ -22,7 +22,7 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
 
         // Agafem l'objecte de la view que es una LINEA DEL CURSOR
         Cursor article = (Cursor) getItem(position);
-        int stock = article.getInt(article.getColumnIndexOrThrow(ArticleDataSource.GESTORARTICLES_STOCK));
+        int stock = article.getInt(article.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK));
 
         // Pintem el fons de l'article depenent de si té o no stock
         if (stock <= 0) {
