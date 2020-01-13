@@ -85,10 +85,10 @@ public class GestorArticlesDataSource {
         return dbW.insert(table_GESTORARTICLES,null,values);
     }
 
-    public void update(long id, String codiArticle, float pvp, int stock) {
+    public void update(long id, String descripcio, float pvp, int stock) {
         // Modifiquem els valors de las tasca amb clau primària "id"
         ContentValues values = new ContentValues();
-        values.put(GESTORARTICLES_CODIARTICLE, codiArticle);
+        values.put(GESTORARTICLES_DESCRIPCION, descripcio);
         values.put(GESTORARTICLES_PVP,pvp);
         values.put(GESTORARTICLES_STOCK,stock);
 

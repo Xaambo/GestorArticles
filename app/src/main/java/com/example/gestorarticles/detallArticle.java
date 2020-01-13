@@ -98,10 +98,10 @@ public class detallArticle extends AppCompatActivity {
         String desc;
 
         edt = findViewById(R.id.edtCodiArticle);
+        edt.setFocusable(false);
         edt.setText(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE)));
 
         edt = findViewById(R.id.edtDescripcio);
-        edt.setFocusable(false);
 
         desc = datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION));
         setTitle("Article: " + desc);
@@ -163,7 +163,7 @@ public class detallArticle extends AppCompatActivity {
             idArticle = bd.insert(codiArticle, descripcio, preu, stock);
         }
         else {
-            bd.update(idArticle,codiArticle,preu,stock);
+            bd.update(idArticle,descripcio,preu,stock);
         }
 
         Intent i = new Intent();
