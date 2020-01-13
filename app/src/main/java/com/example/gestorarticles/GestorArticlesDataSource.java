@@ -66,6 +66,13 @@ public class GestorArticlesDataSource {
         return dbR.rawQuery(query, args);
     }
 
+    public Cursor countArticle(String id) {
+        /* Consulta de tots els articles amb Stock */
+        String query = "SELECT COUNT(codiarticle) AS codiarticle FROM gestorarticles WHERE codiarticle = ?";
+        String[] args = new String[] {id};
+        return dbR.rawQuery(query, args);
+    }
+
     // MODIFICACIO DB
     public long insert(String codiArticle, String descricpio, float pvp, int stock) {
         // Creem una nova tasca i retornem el id crear per si el necessiten
@@ -93,6 +100,12 @@ public class GestorArticlesDataSource {
         // Eliminem l'artile amb clau primària "id"
         String[] args = new String[] {String.valueOf(id)};
         dbW.delete(table_GESTORARTICLES,GESTORARTICLES_ID + " = ?", args);
+    }
+
+    public void dropDataBase() {
+        // Fem un drop de la data base
+        String exec = "DROP TABLE IF EXISTS gestorarticles";
+        dbW.execSQL(exec);
     }
 
 }

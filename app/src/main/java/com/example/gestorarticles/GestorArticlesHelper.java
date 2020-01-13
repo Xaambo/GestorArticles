@@ -30,7 +30,6 @@ public class GestorArticlesHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // De moment no fem res
 
     }
 }

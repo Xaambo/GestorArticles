@@ -13,9 +13,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.snackbar.Snackbar;
 
-public class detallArticle extends Activity {
+public class detallArticle extends AppCompatActivity {
 
     private long idArticle;
     private GestorArticlesDataSource bd;
@@ -24,8 +26,10 @@ public class detallArticle extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_detallarticle);
-        
+
         bd = new GestorArticlesDataSource(this);
+
+        setTitle("Article");
 
         // Boton ok
         Button btnOk = (Button) findViewById(R.id.btnOk);
@@ -91,13 +95,18 @@ public class detallArticle extends Activity {
         // Posem les dades en el detall ready per a ser modificades
         EditText edt;
         float preu;
+        String desc;
 
         edt = findViewById(R.id.edtCodiArticle);
         edt.setText(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE)));
 
         edt = findViewById(R.id.edtDescripcio);
         edt.setFocusable(false);
-        edt.setText(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION)));
+
+        desc = datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION));
+        setTitle("Article: " + desc);
+
+        edt.setText(desc);
 
         edt = findViewById(R.id.edtStock);
         edt.setText(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_STOCK)));
@@ -111,11 +120,24 @@ public class detallArticle extends Activity {
     private void aceptar() {
         // Validem les dades
         EditText edt;
+        int count;
 
-        // El títol ha d'estar informat
+        // El codi d'article ha d'estar informat i ha de ser únic
         edt = findViewById(R.id.edtCodiArticle);
         String codiArticle = edt.getText().toString();
-        
+
+        Cursor datos = bd.countArticle(codiArticle);
+        boolean hiHaDades = datos.moveToFirst();
+
+        if (hiHaDades) {
+            count = Integer.parseInt(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE)));
+
+            if (count > 0 && idArticle == -1) {
+                Snackbar.make(findViewById(android.R.id.content), "Ja existeix un article amb aquest codi.", Snackbar.LENGTH_LONG).show();
+                return;
+            }
+        }
+
         if (codiArticle.length() <= 0) {
             Snackbar.make(findViewById(android.R.id.content), "El codi d'article ha d'estar informat.", Snackbar.LENGTH_LONG).show();
             return;
