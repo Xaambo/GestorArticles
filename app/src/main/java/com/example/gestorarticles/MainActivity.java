@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         filterActual = filtreArticles.FILTER_ALL;
 
-        Cursor cursorTasks = bd.articles();
+        Cursor cursorArticles = bd.articles();
 
-        scTasks = new adapterGestorArticles(this, R.layout.layout_article, cursorTasks, from, to, 1);
+        scTasks = new adapterGestorArticles(this, R.layout.layout_article, cursorArticles, from, to, 1);
 
         ListView lv = findViewById(R.id.lvArticles);
         lv.setAdapter(scTasks);
@@ -58,23 +58,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void carregaArticles() {
 
-        Cursor cursorTasks = null;
+        Cursor cursorArticles = null;
 
         // Demanem les tasques depenen del filtre que s'estigui aplicant
         switch (filterActual) {
             case FILTER_ALL:
-                cursorTasks = bd.articles();
+                cursorArticles = bd.articles();
                 break;
             case FILTER_STOCK:
-                cursorTasks = bd.articlesStock();
+                cursorArticles = bd.articlesStock();
                 break;
             case FILTER_NOSTOCK:
-                cursorTasks = bd.articlesNoStock();
+                cursorArticles = bd.articlesNoStock();
                 break;
         }
 
         // Un cop fet el filtre li diem al cursor que hem canviat les seves dades i que s'actualitzi
-        scTasks.changeCursor(cursorTasks);
+        scTasks.changeCursor(cursorArticles);
         scTasks.notifyDataSetChanged();
     }
 
@@ -161,11 +161,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void filtreOff() {
         // Demanem totes les tasques finalitzades
-        Cursor cursorTasks = bd.articles();
+        Cursor cursorArticles = bd.articles();
         filterActual = filtreArticles.FILTER_ALL;
 
         // Notifiquem al adapter que les dades han canviat i que refresqui
-        scTasks.changeCursor(cursorTasks);
+        scTasks.changeCursor(cursorArticles);
         scTasks.notifyDataSetChanged();
 
         // Ens situem en el primer registre
@@ -177,11 +177,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void filtreStock() {
         // Demanem totes les tasques finalitzades
-        Cursor cursorTasks = bd.articlesStock();
+        Cursor cursorArticles = bd.articlesStock();
         filterActual = filtreArticles.FILTER_STOCK;
 
         // Notifiquem al adapter que les dades han canviat i que refresqui
-        scTasks.changeCursor(cursorTasks);
+        scTasks.changeCursor(cursorArticles);
         scTasks.notifyDataSetChanged();
 
         // Ens situem en el primer registre
@@ -193,11 +193,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void filtreNoStock() {
         // Demanem totes les tasques finalitzades
-        Cursor cursorTasks = bd.articlesNoStock();
+        Cursor cursorArticles = bd.articlesNoStock();
         filterActual = filtreArticles.FILTER_NOSTOCK;
 
         // Notifiquem al adapter que les dades han canviat i que refresqui
-        scTasks.changeCursor(cursorTasks);
+        scTasks.changeCursor(cursorArticles);
         scTasks.notifyDataSetChanged();
 
         // Ens situem en el primer registre
