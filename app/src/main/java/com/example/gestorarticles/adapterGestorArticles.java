@@ -38,14 +38,14 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
         }
 
         // Capturem botons
-        ImageView btnMensage = view.findViewById(R.id.ivBorrar);
+        ImageView btnBorrar = view.findViewById(R.id.ivBorrar);
 
-        btnMensage.setOnClickListener(new View.OnClickListener() {
+        btnBorrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                // Busco la ROW
+                // Busquem la linia a eliminar
                 View row = (View) v.getParent();
-                // Busco el ListView
+                // Busquem el listView per poder treure el numero de la fila
                 ListView lv = (ListView) row.getParent();
                 // Busco quina posicio ocupa la Row dins de la ListView
                 int position = lv.getPositionForView(row);
