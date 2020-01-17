@@ -44,7 +44,7 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
             public void onClick(View v) {
 
                 // Busquem la linia a eliminar
-                View row = (View) v.getParent();
+                View row = (View) v.getParent().getParent();
                 // Busquem el listView per poder treure el numero de la fila
                 ListView lv = (ListView) row.getParent();
                 // Busco quina posicio ocupa la Row dins de la ListView

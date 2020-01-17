@@ -109,6 +109,7 @@ public class detallArticle extends AppCompatActivity {
         edt.setText(desc);
 
         edt = findViewById(R.id.edtStock);
+        edt.setFocusable(false);
         edt.setText(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_STOCK)));
 
         preu = datos.getFloat(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_PVP));
