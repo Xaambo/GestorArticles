@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
     
     private static final String noStock = "#BFD78290";
@@ -23,7 +25,7 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View view = super.getView(position, convertView, parent);
+        final View view = super.getView(position, convertView, parent);
 
         // Agafem l'objecte de la view que es una LINEA DEL CURSOR
         Cursor article = (Cursor) getItem(position);
@@ -49,7 +51,6 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
                 ListView lv = (ListView) row.getParent();
                 // Busco quina posicio ocupa la Row dins de la ListView
                 int position = lv.getPositionForView(row);
-
                 // Carrego la linia del cursor de la posició.
                 Cursor linia = (Cursor) getItem(position);
 
@@ -57,6 +58,41 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
             }
         });
 
+        ImageView ivIn = view.findViewById(R.id.ivIn);
+
+        ivIn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Busquem la linia a eliminar
+                View row = (View) v.getParent().getParent();
+                // Busquem el listView per poder treure el numero de la fila
+                ListView lv = (ListView) row.getParent();
+                // Busco quina posicio ocupa la Row dins de la ListView
+                int position = lv.getPositionForView(row);
+                // Carrego la linia del cursor de la posició.
+                Cursor linia = (Cursor) getItem(position);
+
+                Snackbar.make(view, "Incersió d'Stock.", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView ivOut = view.findViewById(R.id.ivOut);
+
+        ivOut.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Busquem la linia a eliminar
+                View row = (View) v.getParent().getParent();
+                // Busquem el listView per poder treure el numero de la fila
+                ListView lv = (ListView) row.getParent();
+                // Busco quina posicio ocupa la Row dins de la ListView
+                int position = lv.getPositionForView(row);
+                // Carrego la linia del cursor de la posició.
+                Cursor linia = (Cursor) getItem(position);
+
+                Snackbar.make(view, "Extracció d'Stock.", Snackbar.LENGTH_LONG).show();
+            }
+        });
         return view;
     }
 }

@@ -131,6 +131,7 @@ public class detallArticle extends AppCompatActivity {
         boolean hiHaDades = datos.moveToFirst();
 
         if (hiHaDades) {
+
             count = Integer.parseInt(datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE)));
 
             if (count > 0 && idArticle == -1) {
@@ -149,7 +150,7 @@ public class detallArticle extends AppCompatActivity {
         String descripcio = edt.getText().toString();
 
         if (descripcio.length() <= 0) {
-            Snackbar.make(findViewById(android.R.id.content), "La descripció ha d'estar informada", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), "La descripció ha d'estar informada.", Snackbar.LENGTH_LONG).show();
             return;
         }
 

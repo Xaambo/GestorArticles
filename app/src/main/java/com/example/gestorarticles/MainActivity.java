@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-                    // modifiquem el id
-                    actualitzarArticle(id);
+                // modifiquem el id
+                actualitzarArticle(id);
                 }
             }
         );
