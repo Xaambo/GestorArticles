@@ -11,18 +11,18 @@
         android:layout_marginRight="5dp">
 
         <ImageView
-            android:id="@+id/ivOut"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:color="@android:color/black"
-            android:src="@drawable/ic_arrow_out" />
-
-        <ImageView
             android:id="@+id/ivIn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:color="@android:color/black"
             android:src="@drawable/ic_arrow_in" />
+
+        <ImageView
+            android:id="@+id/ivOut"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:color="@android:color/black"
+            android:src="@drawable/ic_arrow_out" />
 
     </LinearLayout>
 

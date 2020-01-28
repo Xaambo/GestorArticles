@@ -9,7 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.gestorarticles.detallArticle">
+    tools:context="com.example.gestorarticles.stockManagerGestorArticles">
 
     <LinearLayout
         android:orientation="vertical"
@@ -34,6 +34,11 @@
             android:textAlignment="center"
             android:textSize="20dp"
             android:text="Article: CodiArticle" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </RelativeLayout>
