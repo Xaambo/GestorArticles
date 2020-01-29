@@ -1,10 +1,16 @@
 package com.example.gestorarticles;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 public class stockManagerGestorArticles extends AppCompatActivity {
 
@@ -27,5 +33,26 @@ public class stockManagerGestorArticles extends AppCompatActivity {
 
         int spinnerPosition = adapter.getPosition(opcio);
         spinner.setSelection(spinnerPosition);
+
+        final EditText edtDatePicker = findViewById(R.id.edtDatePicker);
+        edtDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(edtDatePicker);
+            }
+        });
+    }
+
+    private void showDatePickerDialog(final EditText edtDatePicker) {
+        DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                edtDatePicker.setText(selectedDate);
+            }
+        });
+
+        picker.show(getSupportFragmentManager(), "datePicker");
     }
 }
