@@ -14,6 +14,13 @@ public class GestorArticlesDataSource {
     public static final String GESTORARTICLES_PVP = "pvp";
     public static final String GESTORARTICLES_STOCK = "stock";
 
+    public static final String table_MOVIMENTS = "moviments";
+    public static final String MOVIMENTS_ID = "_id";
+    public static final String MOVIMENTS_CODIARTICLE = "codiarticle";
+    public static final String MOVIMENTS_DIA = "dia";
+    public static final String MOVIMENTS_QUANTITAT = "quantitat";
+    public static final String MOVIMENTS_TIPUS = "tipus";
+
     private GestorArticlesHelper dbHelper;
     private SQLiteDatabase dbW, dbR;
 
@@ -60,14 +67,14 @@ public class GestorArticlesDataSource {
     }
 
     public Cursor article(long id) {
-        /* Consulta de tots els articles amb Stock */
+        /* Consulta d'un article */
         String query = "SELECT * FROM gestorarticles WHERE _id = ?";
         String[] args = new String[] {String.valueOf(id)};
         return dbR.rawQuery(query, args);
     }
 
     public Cursor countArticle(String id) {
-        /* Consulta de tots els articles amb Stock */
+        /* Consulta numero articles */
         String query = "SELECT COUNT(codiarticle) AS codiarticle FROM gestorarticles WHERE codiarticle = ?";
         String[] args = new String[] {id};
         return dbR.rawQuery(query, args);
@@ -82,7 +89,18 @@ public class GestorArticlesDataSource {
         values.put(GESTORARTICLES_PVP, pvp);
         values.put(GESTORARTICLES_STOCK, stock);
 
-        return dbW.insert(table_GESTORARTICLES,null,values);
+        return dbW.insert(table_GESTORARTICLES,null, values);
+    }
+
+    public long insertMoviment(String codiArticle, String dia, int stock, String tipus) {
+        // Creem una nova tasca i retornem el id crear per si el necessiten
+        ContentValues values = new ContentValues();
+        values.put(MOVIMENTS_CODIARTICLE, codiArticle);
+        values.put(MOVIMENTS_DIA, dia);
+        values.put(MOVIMENTS_QUANTITAT, stock);
+        values.put(MOVIMENTS_TIPUS, tipus);
+
+        return dbW.insert(table_MOVIMENTS,null, values);
     }
 
     public void update(long id, String descripcio, float pvp, int stock) {

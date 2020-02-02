@@ -16,20 +16,31 @@ public class GestorArticlesHelper extends SQLiteOpenHelper {
         super(context, database_NAME, null, database_VERSION);
     }
 
+    String CREATE_GESTORARTICLES =
+            "CREATE TABLE gestorarticles ( _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "codiarticle TEXT," +
+                    "descripcio TEXT," +
+                    "pvp REAL," +
+                    "stock INTEGER)";
+
+    String CREATE_MOVIMENTS =
+            "CREATE TABLE moviments ( _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "codiarticle TEXT," +
+                    "dia TEXT," +
+                    "quantitat INTEGER," +
+                    "tipus TEXT," +
+                    "FOREIGN KEY(codiarticle) REFERENCES gestorarticles(codiarticle))";
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_GESTORARTICLES =
-                "CREATE TABLE gestorarticles ( _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "codiarticle TEXT," +
-                        "descripcio TEXT," +
-                        "pvp FLOAT," +
-                        "stock INTEGER)";
-
         db.execSQL(CREATE_GESTORARTICLES);
+        db.execSQL(CREATE_MOVIMENTS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion < 2) {
+            db.execSQL(CREATE_MOVIMENTS);
+        }
     }
 }

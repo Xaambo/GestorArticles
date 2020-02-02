@@ -36,7 +36,9 @@
             android:orientation="horizontal"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
 
             <Spinner
                 android:id="@+id/spinner"
@@ -74,10 +76,38 @@
             android:textAlignment="center"
             android:inputType="date"
             android:clickable="true"
+            android:hint="Día en el que es realitza el moviment..."
             android:focusable="false"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:maxLines="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorAccent"
+                android:text="Cancel·lar" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
+                android:text="Ok" />
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>
