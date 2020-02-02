@@ -1,6 +1,7 @@
 package com.example.gestorarticles;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,14 +16,19 @@ import androidx.fragment.app.DialogFragment;
 
 public class stockManagerGestorArticles extends AppCompatActivity {
 
+    private GestorArticlesDataSource bd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_stockmanager);
 
+        bd = new GestorArticlesDataSource(this);
+
         Bundle extras = getIntent().getExtras();
 
         String opcio = extras.getString("opcio");
+        final Cursor linia = extras.getParcelable("linia");
 
         final Spinner spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -43,18 +49,37 @@ public class stockManagerGestorArticles extends AppCompatActivity {
             }
         });
 
+        final EditText edtModStock = findViewById(R.id.edtModStock);
+
         TextView tvOk = findViewById(R.id.tvOk);
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nouMoviment(v, spinner, edtDatePicker);
+                nouMoviment(linia, spinner, edtModStock, edtDatePicker);
             }
         });
     }
 
-    private void nouMoviment(View v, Spinner spinner, EditText edtDatePicker) {
+    private void nouMoviment(Cursor linia, Spinner spinner, EditText edtModStock, EditText edtDatePicker) {
 
-        if (spinner.getSelectedItemPosition() == 1){};
+        String codiArticle = linia.getString(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE));
+        int modStock = Integer.parseInt(edtModStock.getText().toString());
+        int newStock;
+        String data = edtDatePicker.getText().toString();
+
+        if (spinner.getSelectedItemPosition() == 0){
+
+            newStock = linia.getInt(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK)) + modStock;
+
+            bd.insertMoviment(codiArticle, data, modStock, "E");
+            bd.updateStock(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID), newStock);
+        } else {
+
+            newStock = linia.getInt(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK)) - modStock;
+
+            bd.insertMoviment(codiArticle, data, modStock, "S");
+            bd.updateStock(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID), newStock);
+        }
     }
 
     private void showDatePickerDialog(final EditText edtDatePicker) {

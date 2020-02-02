@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static int ARTICLE_UPDATE = 2;
 
     private GestorArticlesDataSource bd;
-    private adapterGestorArticles scTasks;
+    private adapterGestorArticles scArticles;
     private filtreArticles filterActual;
 
     private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE, GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.GESTORARTICLES_STOCK};
@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursorArticles = bd.articles();
 
-        scTasks = new adapterGestorArticles(this, R.layout.layout_article, cursorArticles, from, to, 1);
+        scArticles = new adapterGestorArticles(this, R.layout.layout_article, cursorArticles, from, to, 1);
 
         ListView lv = findViewById(R.id.lvArticles);
-        lv.setAdapter(scTasks);
+        lv.setAdapter(scArticles);
 
         lv.setOnItemClickListener(
             new AdapterView.OnItemClickListener() {
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Un cop fet el filtre li diem al cursor que hem canviat les seves dades i que s'actualitzi
-        scTasks.changeCursor(cursorArticles);
-        scTasks.notifyDataSetChanged();
+        scArticles.changeCursor(cursorArticles);
+        scArticles.notifyDataSetChanged();
     }
 
     @Override
@@ -165,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
         filterActual = filtreArticles.FILTER_ALL;
 
         // Notifiquem al adapter que les dades han canviat i que refresqui
-        scTasks.changeCursor(cursorArticles);
-        scTasks.notifyDataSetChanged();
+        scArticles.changeCursor(cursorArticles);
+        scArticles.notifyDataSetChanged();
 
         // Ens situem en el primer registre
         ListView lv = (ListView) findViewById(R.id.lvArticles);
@@ -181,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
         filterActual = filtreArticles.FILTER_STOCK;
 
         // Notifiquem al adapter que les dades han canviat i que refresqui
-        scTasks.changeCursor(cursorArticles);
-        scTasks.notifyDataSetChanged();
+        scArticles.changeCursor(cursorArticles);
+        scArticles.notifyDataSetChanged();
 
         // Ens situem en el primer registre
         ListView lv = (ListView) findViewById(R.id.lvArticles);
@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
         filterActual = filtreArticles.FILTER_NOSTOCK;
 
         // Notifiquem al adapter que les dades han canviat i que refresqui
-        scTasks.changeCursor(cursorArticles);
-        scTasks.notifyDataSetChanged();
+        scArticles.changeCursor(cursorArticles);
+        scArticles.notifyDataSetChanged();
 
         // Ens situem en el primer registre
         ListView lv = (ListView) findViewById(R.id.lvArticles);

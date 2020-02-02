@@ -114,6 +114,15 @@ public class GestorArticlesDataSource {
         dbW.update(table_GESTORARTICLES,values, GESTORARTICLES_ID + " = ?", args);
     }
 
+    public void updateStock(long id, int stock) {
+        // Modifiquem els valors de las tasca amb clau primària "id"
+        ContentValues values = new ContentValues();
+        values.put(GESTORARTICLES_STOCK,stock);
+
+        String[] args = new String[] {String.valueOf(id)};
+        dbW.update(table_GESTORARTICLES,values, GESTORARTICLES_ID + " = ?", args);
+    }
+
     public void delete(long id) {
         // Eliminem l'artile amb clau primària "id"
         String[] args = new String[] {String.valueOf(id)};

@@ -12,16 +12,16 @@ import android.widget.ListView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
-    
+public class adapterMovimentsGestorArticles extends android.widget.SimpleCursorAdapter {
+
     private static final String noStock = "#BFD78290";
     private static final String wStock = "#FFFFFF";
 
-    private MainActivity gestorArticles;
+    private movimentsGestorArticles movimentsArticles;
 
-    public adapterGestorArticles(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
+    public adapterMovimentsGestorArticles(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
         super(context, layout, c, from, to, flags);
-        gestorArticles = (MainActivity) context;
+        movimentsArticles = (movimentsGestorArticles) context;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
                 // Carrego la linia del cursor de la posició.
                 Cursor linia = (Cursor) getItem(position);
 
-                gestorArticles.eliminarArticle(linia.getInt(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID)));
+                //movimentsArticles.eliminarArticle(linia.getInt(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID)));
             }
         });
 
