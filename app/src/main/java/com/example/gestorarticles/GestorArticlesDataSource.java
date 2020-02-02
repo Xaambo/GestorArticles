@@ -52,6 +52,12 @@ public class GestorArticlesDataSource {
         return dbR.rawQuery(query, null);
     }
 
+    public Cursor moviments() {
+        /* Consulta dels moviments */
+        String query = "SELECT descripcio, dia, quantitat FROM gestorarticles INNER JOIN moviments";
+        return dbR.rawQuery(query, null);
+    }
+
     public Cursor articlesNoStock() {
         /* Consulta de tots els articles sense Stock */
         String query = "SELECT * FROM gestorarticles WHERE stock <= ?";
@@ -114,13 +120,13 @@ public class GestorArticlesDataSource {
         dbW.update(table_GESTORARTICLES,values, GESTORARTICLES_ID + " = ?", args);
     }
 
-    public void updateStock(long id, int stock) {
+    public int updateStock(long id, int stock) {
         // Modifiquem els valors de las tasca amb clau primària "id"
         ContentValues values = new ContentValues();
         values.put(GESTORARTICLES_STOCK,stock);
 
         String[] args = new String[] {String.valueOf(id)};
-        dbW.update(table_GESTORARTICLES,values, GESTORARTICLES_ID + " = ?", args);
+        return dbW.update(table_GESTORARTICLES,values, GESTORARTICLES_ID + " = ?", args);
     }
 
     public void delete(long id) {

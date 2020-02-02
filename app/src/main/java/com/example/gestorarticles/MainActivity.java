@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static int ARTICLE_ADD = 1;
     private static int ARTICLE_UPDATE = 2;
+    private static int ARTICLE_EDIT = 3;
 
     private GestorArticlesDataSource bd;
     private adapterGestorArticles scArticles;
@@ -120,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
                 carregaArticles();
             }
         }
+
+        if (requestCode == ARTICLE_EDIT) {
+            if (resultCode == RESULT_OK) {
+                carregaArticles();
+            }
+        }
     }
 
     private void crearArticle() {
@@ -130,6 +137,15 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, detallArticle.class );
         i.putExtras(bundle);
         startActivityForResult(i,ARTICLE_ADD);
+    }
+
+    private void veureMoviments() {
+
+
+
+        Intent i = new Intent(this, movimentsGestorArticles.class );
+        i.putExtra("data", "02 / 02 / 2020");
+        startActivity(i);
     }
 
     private void actualitzarArticle(long id) {

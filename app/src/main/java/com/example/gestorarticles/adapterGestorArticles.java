@@ -1,9 +1,11 @@
 package com.example.gestorarticles;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import java.io.Serializable;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
     
@@ -93,10 +100,12 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
         // Carrego la linia del cursor de la posició.
         Cursor linia = (Cursor) getItem(position);
 
+        int id = linia.getInt(linia.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID));
+
         Intent i = new Intent(v.getContext(), stockManagerGestorArticles.class);
         i.putExtra("opcio", opcio);
-        i.putExtra("linia", (Parcelable) linia);
-        v.getContext().startActivity(i);
+        i.putExtra("_id", id);
+        ((Activity)v.getContext()).startActivityForResult(i, 3);
 
     }
 }
