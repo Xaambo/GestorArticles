@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -94,6 +95,7 @@ public class adapterGestorArticles extends android.widget.SimpleCursorAdapter {
 
         Intent i = new Intent(v.getContext(), stockManagerGestorArticles.class);
         i.putExtra("opcio", opcio);
+        i.putExtra("linia", (Parcelable) linia);
         v.getContext().startActivity(i);
 
     }

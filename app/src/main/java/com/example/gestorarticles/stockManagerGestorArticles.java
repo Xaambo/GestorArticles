@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -23,7 +24,7 @@ public class stockManagerGestorArticles extends AppCompatActivity {
 
         String opcio = extras.getString("opcio");
 
-        Spinner spinner = findViewById(R.id.spinner);
+        final Spinner spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.opcions_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -41,6 +42,19 @@ public class stockManagerGestorArticles extends AppCompatActivity {
                 showDatePickerDialog(edtDatePicker);
             }
         });
+
+        TextView tvOk = findViewById(R.id.tvOk);
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nouMoviment(v, spinner, edtDatePicker);
+            }
+        });
+    }
+
+    private void nouMoviment(View v, Spinner spinner, EditText edtDatePicker) {
+
+        if (spinner.getSelectedItemPosition() == 1){};
     }
 
     private void showDatePickerDialog(final EditText edtDatePicker) {
