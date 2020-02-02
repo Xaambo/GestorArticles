@@ -34,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="start"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginStart="10dp">
@@ -42,25 +41,29 @@
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="130dp"
-                android:layout_height="54dp" />
+                android:layout_height="54dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="51dp"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="end"
                 android:inputType="number"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:layout_height="match_parent"
                 android:text="u."
-                android:textSize="20sp"/>
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <EditText
@@ -68,9 +71,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_margin="10dp"
+            android:textAlignment="center"
             android:inputType="date"
             android:clickable="true"
             android:focusable="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             android:maxLines="1" />
 
     </LinearLayout>
