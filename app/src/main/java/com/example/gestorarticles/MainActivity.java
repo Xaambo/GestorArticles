@@ -3,6 +3,7 @@ package com.example.gestorarticles;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private GestorArticlesDataSource bd;
     private adapterGestorArticles scArticles;
     private filtreArticles filterActual;
+    private stockManagerGestorArticles stockManager;
 
     private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE, GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.GESTORARTICLES_STOCK};
     private static int[] to = new int[]{R.id.tvCodiArticle, R.id.tvDescripcio, R.id.tvNumUnitats};
@@ -92,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnAdd:
                 crearArticle();
                 return true;
+            case R.id.btnHistory:
+                veureMoviments();
+                return true;
             case R.id.noFiltre:
                 filtreOff();
                 return true;
@@ -141,11 +149,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void veureMoviments() {
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setTitle("Data");
+        builder.setMessage("Dia dels moviments?");
 
-        Intent i = new Intent(this, movimentsGestorArticles.class );
-        i.putExtra("data", "02 / 02 / 2020");
-        startActivity(i);
+        final EditText data = new EditText(MainActivity.this);
+        data.setFocusable(false);
+        data.setClickable(true);
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(data);
+            }
+        });
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        data.setLayoutParams(lp);
+        builder.setView(data);
+
+        final Intent i = new Intent(this, movimentsGestorArticles.class );
+        i.putExtra("data", data.getText().toString());
+
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                startActivity(i);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", null);
+
+        builder.show();
     }
 
     private void actualitzarArticle(long id) {
@@ -221,5 +257,18 @@ public class MainActivity extends AppCompatActivity {
         lv.setSelection(0);
 
         Snackbar.make(findViewById(android.R.id.content), "Ensenyant articles sense stock actualment...", Snackbar.LENGTH_LONG).show();
+    }
+
+    private void showDatePickerDialog(final EditText edtDatePicker) {
+        DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                edtDatePicker.setText(selectedDate);
+            }
+        });
+
+        picker.show(getSupportFragmentManager(), "datePicker");
     }
 }

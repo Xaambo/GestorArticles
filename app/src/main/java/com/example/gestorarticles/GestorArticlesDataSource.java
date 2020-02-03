@@ -54,7 +54,7 @@ public class GestorArticlesDataSource {
 
     public Cursor moviments() {
         /* Consulta dels moviments */
-        String query = "SELECT descripcio, dia, quantitat FROM gestorarticles INNER JOIN moviments";
+        String query = "SELECT * FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle";
         return dbR.rawQuery(query, null);
     }
 

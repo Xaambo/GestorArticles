@@ -9,6 +9,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/btnHistory"
+        android:title="HISTORY"
+        android:icon="@drawable/ic_import_export_black"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/filter"
         android:icon="@drawable/ic_filtre"
         app:showAsAction="always"

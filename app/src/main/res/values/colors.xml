@@ -5,4 +5,6 @@
     <color name="colorAccent">#1D0129</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="verd">#4600FF33</color>
+    <color name="vermell">#45FF0000</color>
 </resources>

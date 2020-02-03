@@ -21,6 +21,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".detallArticle" />
         <activity android:name=".stockManagerGestorArticles" />
+        <activity android:name=".movimentsGestorArticles" />
     </application>
 
 </manifest>

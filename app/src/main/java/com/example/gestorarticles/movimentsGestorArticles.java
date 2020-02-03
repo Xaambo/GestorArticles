@@ -12,8 +12,8 @@ public class movimentsGestorArticles extends AppCompatActivity {
     private GestorArticlesDataSource bd;
     private adapterMovimentsGestorArticles scMoviments;
 
-    private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.MOVIMENTS_DIA, GestorArticlesDataSource.MOVIMENTS_QUANTITAT};
-    private static int[] to = new int[]{R.id.tvDescripcioArticle, R.id.tvDescripcio, R.id.tvNumUnitats};
+    private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.MOVIMENTS_DIA, GestorArticlesDataSource.MOVIMENTS_QUANTITAT, GestorArticlesDataSource.MOVIMENTS_TIPUS};
+    private static int[] to = new int[]{R.id.tvDescripcioArticle, R.id.tvData, R.id.tvNumUnitats, R.id.tvTipusMoviment};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
 
         scMoviments = new adapterMovimentsGestorArticles(this, R.layout.layout_moviment, cursorMoviments, from, to, 1);
 
-        ListView lv = findViewById(R.id.lvArticles);
+        ListView lv = findViewById(R.id.lvMoviments);
         lv.setAdapter(scMoviments);
     }
 }
