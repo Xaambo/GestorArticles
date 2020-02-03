@@ -23,7 +23,16 @@ public class movimentsGestorArticles extends AppCompatActivity {
         setTitle("Moviments");
         bd = new GestorArticlesDataSource(this);
 
-        Cursor cursorMoviments = bd.moviments();
+        Bundle extras = getIntent().getExtras();
+        String data = extras.getString("data");
+
+        Cursor cursorMoviments;
+
+        if (data != null) {
+            cursorMoviments = bd.movimentsEnData(data);
+        } else {
+            cursorMoviments = bd.moviments();
+        }
 
         scMoviments = new adapterMovimentsGestorArticles(this, R.layout.layout_moviment, cursorMoviments, from, to, 1);
 

@@ -54,8 +54,15 @@ public class GestorArticlesDataSource {
 
     public Cursor moviments() {
         /* Consulta dels moviments */
-        String query = "SELECT * FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle";
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle";
         return dbR.rawQuery(query, null);
+    }
+
+    public Cursor movimentsEnData(String data) {
+        /* Consulta dels moviments */
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia     = ?";
+        String[] args = new String[] {data};
+        return dbR.rawQuery(query, args);
     }
 
     public Cursor articlesNoStock() {

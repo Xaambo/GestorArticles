@@ -116,12 +116,12 @@ public class stockManagerGestorArticles extends AppCompatActivity {
         return bd.updateStock(datos.getInt(datos.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID)), newStock);
     }
 
-    private void showDatePickerDialog(final EditText edtDatePicker) {
+    protected void showDatePickerDialog(final EditText edtDatePicker) {
         final DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
             }
         });
