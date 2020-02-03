@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -150,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void veureMoviments() {
 
+        final Intent i = new Intent(this, movimentsGestorArticles.class );
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Data");
@@ -161,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog(data);
+                showDatePickerDialog(data, i);
             }
         });
 
@@ -172,13 +175,18 @@ public class MainActivity extends AppCompatActivity {
         data.setLayoutParams(lp);
         builder.setView(data);
 
-        final Intent i = new Intent(this, movimentsGestorArticles.class );
-        i.putExtra("data", data.getText().toString());
-
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Veure tot", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
+                i.putExtra("data", (Parcelable[]) null);
                 startActivity(i);
+            }
+        });
+
+        builder.setPositiveButton("Día", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                showDatePickerDialog(data, i);
             }
         });
 
@@ -262,13 +270,15 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), "Ensenyant articles sense stock actualment...", Snackbar.LENGTH_LONG).show();
     }
 
-    private void showDatePickerDialog(final EditText edtDatePicker) {
+    private void showDatePickerDialog(final EditText edtDatePicker, final Intent i) {
         DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
                 final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
+                i.putExtra("data", selectedDate);
+                startActivity(i);
             }
         });
 

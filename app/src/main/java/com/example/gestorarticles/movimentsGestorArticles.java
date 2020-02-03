@@ -2,6 +2,9 @@ package com.example.gestorarticles;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -38,5 +41,23 @@ public class movimentsGestorArticles extends AppCompatActivity {
 
         ListView lv = findViewById(R.id.lvMoviments);
         lv.setAdapter(scMoviments);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.layout_menu_moviments, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnSelectDia:
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
