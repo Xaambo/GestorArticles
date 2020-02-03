@@ -31,6 +31,24 @@ public class detallArticle extends AppCompatActivity {
 
         setTitle("Article");
 
+        // TV dataFrom
+        TextView tv = findViewById(R.id.tvDataFrom);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // TV dataTo
+        tv = findViewById(R.id.tvDataFrom);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         // Boton ok
         Button btnOk = (Button) findViewById(R.id.btnOk);
         btnOk.setOnClickListener(new View.OnClickListener() {

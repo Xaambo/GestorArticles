@@ -19,6 +19,7 @@ public class stockManagerGestorArticles extends AppCompatActivity {
 
     private GestorArticlesDataSource bd;
     private Cursor datos;
+    private logic logic = new logic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class stockManagerGestorArticles extends AppCompatActivity {
         edtDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog(edtDatePicker);
+                logic.showDatePickerDialog(edtDatePicker);
             }
         });
 
@@ -107,7 +108,6 @@ public class stockManagerGestorArticles extends AppCompatActivity {
             setResult(RESULT_CANCELED, i);
             finish();
         }
-
     }
 
     private int accioBDD(String codiArticle, String data, int modStock, int newStock, String tipus) {
@@ -116,7 +116,7 @@ public class stockManagerGestorArticles extends AppCompatActivity {
         return bd.updateStock(datos.getInt(datos.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_ID)), newStock);
     }
 
-    protected void showDatePickerDialog(final EditText edtDatePicker) {
+    /*protected void showDatePickerDialog(final EditText edtDatePicker) {
         final DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -127,5 +127,5 @@ public class stockManagerGestorArticles extends AppCompatActivity {
         });
 
         picker.show(getSupportFragmentManager(), "datePicker");
-    }
+    }*/
 }

@@ -60,8 +60,15 @@ public class GestorArticlesDataSource {
 
     public Cursor movimentsEnData(String data) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia     = ?";
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia = ?";
         String[] args = new String[] {data};
+        return dbR.rawQuery(query, args);
+    }
+
+    public Cursor movimentsEntreDates(String dataFrom, String dataTo) {
+        /* Consulta dels moviments */
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE date(dia) BETWEEN ? AND ?";
+        String[] args = new String[] {dataFrom, dataTo};
         return dbR.rawQuery(query, args);
     }
 

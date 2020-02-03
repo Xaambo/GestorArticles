@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private GestorArticlesDataSource bd;
     private adapterGestorArticles scArticles;
     private filtreArticles filterActual;
-    private stockManagerGestorArticles stockManager;
+    private logic Logic = new logic();
 
     private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE, GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.GESTORARTICLES_STOCK};
     private static int[] to = new int[]{R.id.tvCodiArticle, R.id.tvDescripcio, R.id.tvNumUnitats};
@@ -153,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent i = new Intent(this, movimentsGestorArticles.class );
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Logic.DatePicker(i, this);
+
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Data");
         builder.setMessage("Dia dels moviments?");
@@ -186,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Día", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                showDatePickerDialog(data, i);
+                logic.showDatePickerDialog(data, i);
             }
         });
 
         builder.setNegativeButton("Cancel", null);
 
-        builder.show();
+        builder.show();*/
     }
 
     private void actualitzarArticle(long id) {
