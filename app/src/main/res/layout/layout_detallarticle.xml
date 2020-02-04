@@ -22,7 +22,7 @@
         android:layout_marginBottom="7dp">
 
         <TextView
-            android:id="@+id/tvHistorial"
+            android:id="@+id/tvHeaderHistorial"
             android:text="Historial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -40,7 +40,8 @@
                 android:background="@drawable/border"
                 android:layout_weight="1"
                 android:hint="Des de"
-                android:textColorHint="@color/black"/>
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/tvDataTo"
@@ -50,7 +51,8 @@
                 android:background="@drawable/border"
                 android:layout_weight="1"
                 android:hint="Fins a"
-                android:textColorHint="@color/black"/>
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"/>
 
             <ImageView
                 android:id="@+id/ivMoviments"

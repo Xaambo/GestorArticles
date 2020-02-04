@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,7 @@ public class detallArticle extends AppCompatActivity {
         final TextView tvDataFrom = findViewById(R.id.tvDataFrom);
         tvDataFrom.setFocusable(false);
         tvDataFrom.setClickable(true);
+        tvDataFrom.setText(null);
         tvDataFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +51,22 @@ public class detallArticle extends AppCompatActivity {
         final TextView tvDataTo = findViewById(R.id.tvDataTo);
         tvDataTo.setFocusable(false);
         tvDataTo.setClickable(true);
+        tvDataTo.setText(null);
         tvDataTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(tvDataTo);
+            }
+        });
+
+        // TV que crida a l'activity
+        final ImageView ivMoviment = findViewById(R.id.ivMoviments);
+        ivMoviment.setFocusable(false);
+        ivMoviment.setClickable(true);
+        ivMoviment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movimentsEntreDates(tvDataFrom.getText().toString(), tvDataTo.getText().toString());
             }
         });
 
@@ -97,6 +112,15 @@ public class detallArticle extends AppCompatActivity {
             // Si estem creant amaguem el checkbox de finalitzada i el botó d'eliminar
             btnDelete.setVisibility(View.GONE);
         }
+    }
+
+    private void movimentsEntreDates(String dataFrom, String dataTo) {
+
+        Intent i = new Intent(this, movimentsGestorArticles.class);
+        i.putExtra("dataFrom", dataFrom);
+        i.putExtra("dataTo", dataTo);
+
+        startActivity(i);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

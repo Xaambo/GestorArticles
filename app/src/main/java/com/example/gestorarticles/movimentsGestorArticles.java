@@ -35,9 +35,10 @@ public class movimentsGestorArticles extends AppCompatActivity {
         bd = new GestorArticlesDataSource(this);
 
         Bundle extras = getIntent().getExtras();
-        String data = extras.getString("data");
 
-        Cursor cursorMoviments = carregaCursor(data);
+        Cursor cursorMoviments;
+
+        cursorMoviments = carregaCursor(extras);
 
         scMoviments = new adapterMovimentsGestorArticles(this, R.layout.layout_moviment, cursorMoviments, from, to, 1);
 
@@ -56,14 +57,14 @@ public class movimentsGestorArticles extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnSelectDia:
-                actualitzarMoviments();
+                actualitzarMoviments(getIntent().getExtras());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void actualitzarMoviments() {
+    private void actualitzarMoviments(final Bundle extras) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -76,7 +77,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog(data);
+                showDatePickerDialog(data, extras);
             }
         });
 
@@ -90,14 +91,14 @@ public class movimentsGestorArticles extends AppCompatActivity {
         builder.setNeutralButton("Veure tot", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                carregaMoviments("");
+                carregaMoviments(extras);
             }
         });
 
         builder.setPositiveButton("Día", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                showDatePickerDialog(data);
+                showDatePickerDialog(data, extras);
             }
         });
 
@@ -106,34 +107,53 @@ public class movimentsGestorArticles extends AppCompatActivity {
         builder.show();
     }
 
-    private void showDatePickerDialog(final EditText edtDatePicker) {
+    private void showDatePickerDialog(final EditText edtDatePicker, final Bundle extras) {
         final DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
                 final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
-                carregaMoviments(selectedDate);
+                carregaMoviments(extras);
             }
         });
 
         picker.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private void carregaMoviments(String data) {
+    private void carregaMoviments(Bundle extras) {
 
-        scMoviments.changeCursor(carregaCursor(data));
+        scMoviments.changeCursor(carregaCursor(extras));
         scMoviments.notifyDataSetChanged();
     }
 
-    private Cursor carregaCursor(String data) {
-
+    private Cursor carregaCursor(Bundle extras) {
         Cursor cursorMoviments;
 
-        if (data != null) {
-            cursorMoviments = bd.movimentsEnData(data);
+        if (extras.size() > 1) {
+
+            String data = extras.getString("data");
+
+            if (data != null) {
+                cursorMoviments = bd.movimentsEnData(data);
+            } else {
+                cursorMoviments = bd.moviments();
+            }
+
         } else {
-            cursorMoviments = bd.moviments();
+
+            String dataFrom = extras.getString("dataFrom");
+            String dataTo = extras.getString("dataTo");
+
+            if (dataFrom == null && dataTo == null) {
+                cursorMoviments = bd.moviments();
+            } else if (dataTo == null) {
+                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
+            } else if (dataFrom == null) {
+                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
+            } else {
+                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
+            }
         }
 
         return cursorMoviments;
