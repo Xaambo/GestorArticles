@@ -2,6 +2,7 @@ package com.example.gestorarticles;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,20 +34,24 @@ public class detallArticle extends AppCompatActivity {
         setTitle("Article");
 
         // TV dataFrom
-        TextView tv = findViewById(R.id.tvDataFrom);
-        tv.setOnClickListener(new View.OnClickListener() {
+        final TextView tvDataFrom = findViewById(R.id.tvDataFrom);
+        tvDataFrom.setFocusable(false);
+        tvDataFrom.setClickable(true);
+        tvDataFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDatePickerDialog(tvDataFrom);
             }
         });
 
         // TV dataTo
-        tv = findViewById(R.id.tvDataFrom);
-        tv.setOnClickListener(new View.OnClickListener() {
+        final TextView tvDataTo = findViewById(R.id.tvDataTo);
+        tvDataTo.setFocusable(false);
+        tvDataTo.setClickable(true);
+        tvDataTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDatePickerDialog(tvDataTo);
             }
         });
 
@@ -102,6 +108,19 @@ public class detallArticle extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDatePickerDialog(final TextView edtDatePicker) {
+        final DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                edtDatePicker.setText(selectedDate);
+            }
+        });
+
+        picker.show(getSupportFragmentManager(), "datePicker");
     }
     
     private void carregarDadesArticle() {

@@ -1,10 +1,18 @@
 package com.example.gestorarticles;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -29,13 +37,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String data = extras.getString("data");
 
-        Cursor cursorMoviments;
-
-        if (data != null) {
-            cursorMoviments = bd.movimentsEnData(data);
-        } else {
-            cursorMoviments = bd.moviments();
-        }
+        Cursor cursorMoviments = carregaCursor(data);
 
         scMoviments = new adapterMovimentsGestorArticles(this, R.layout.layout_moviment, cursorMoviments, from, to, 1);
 
@@ -54,10 +56,86 @@ public class movimentsGestorArticles extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnSelectDia:
-
+                actualitzarMoviments();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void actualitzarMoviments() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Data");
+        builder.setMessage("Dia dels moviments?");
+
+        final EditText data = new EditText(movimentsGestorArticles.this);
+        data.setFocusable(false);
+        data.setClickable(true);
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(data);
+            }
+        });
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        data.setGravity(Gravity.CENTER);
+
+        data.setLayoutParams(lp);
+        builder.setView(data);
+
+        builder.setNeutralButton("Veure tot", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                carregaMoviments("");
+            }
+        });
+
+        builder.setPositiveButton("Día", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                showDatePickerDialog(data);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", null);
+
+        builder.show();
+    }
+
+    private void showDatePickerDialog(final EditText edtDatePicker) {
+        final DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                edtDatePicker.setText(selectedDate);
+                carregaMoviments(selectedDate);
+            }
+        });
+
+        picker.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    private void carregaMoviments(String data) {
+
+        scMoviments.changeCursor(carregaCursor(data));
+        scMoviments.notifyDataSetChanged();
+    }
+
+    private Cursor carregaCursor(String data) {
+
+        Cursor cursorMoviments;
+
+        if (data != null) {
+            cursorMoviments = bd.movimentsEnData(data);
+        } else {
+            cursorMoviments = bd.moviments();
+        }
+
+        return cursorMoviments;
     }
 }
