@@ -65,24 +65,24 @@ public class GestorArticlesDataSource {
         return dbR.rawQuery(query, args);
     }
 
-    public Cursor movimentsEntreDates(String dataFrom, String dataTo) {
+    public Cursor movimentsEntreDates(String dataFrom, String dataTo, String codiArticle) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE date(dia) BETWEEN date(?) AND date(?)";
-        String[] args = new String[] {dataFrom, dataTo};
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE (dia >= ? AND dia <=?) AND gestorarticles.codiarticle = ?";
+        String[] args = new String[] {dataFrom, dataTo, codiArticle};
         return dbR.rawQuery(query, args);
     }
 
-    public Cursor movimentsFinsAData(String dataTo) {
+    public Cursor movimentsFinsAData(String dataTo, String codiArticle) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE date(dia) < date(?)";
-        String[] args = new String[] {dataTo};
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia <= ? AND gestorarticles.codiarticle = ?";
+        String[] args = new String[] {dataTo, codiArticle};
         return dbR.rawQuery(query, args);
     }
 
-    public Cursor movimentsDesDeData(String dataFrom) {
+    public Cursor movimentsDesDeData(String dataFrom, String codiArticle) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE date(dia) > date(?)";
-        String[] args = new String[] {dataFrom};
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia >= ? AND gestorarticles.codiarticle = ?";
+        String[] args = new String[] {dataFrom, codiArticle};
         return dbR.rawQuery(query, args);
     }
 

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class stockManagerGestorArticles extends AppCompatActivity {
 
     private GestorArticlesDataSource bd;
@@ -86,26 +88,32 @@ public class stockManagerGestorArticles extends AppCompatActivity {
         String tipus;
         String data = edtDatePicker.getText().toString();
 
-        if (spinner.getSelectedItemPosition() == 0){
+        if (!data.isEmpty()) {
 
-            newStock = datos.getInt(datos.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK)) + modStock;
-            tipus = "E";
+            if (spinner.getSelectedItemPosition() == 0) {
 
+                newStock = datos.getInt(datos.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK)) + modStock;
+                tipus = "E";
+
+            } else {
+                newStock = datos.getInt(datos.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK)) - modStock;
+                tipus = "S";
+            }
+
+            Intent i = new Intent();
+
+            if (accioBDD(codiArticle, data, modStock, newStock, tipus) > 0) {
+
+                setResult(RESULT_OK, i);
+                finish();
+
+            } else {
+                setResult(RESULT_CANCELED, i);
+                finish();
+            }
         } else {
-            newStock = datos.getInt(datos.getColumnIndexOrThrow(GestorArticlesDataSource.GESTORARTICLES_STOCK)) - modStock;
-            tipus = "S";
-        }
-
-        Intent i = new Intent();
-
-        if (accioBDD(codiArticle, data, modStock, newStock, tipus) > 0) {
-
-            setResult(RESULT_OK, i);
-            finish();
-
-        } else {
-            setResult(RESULT_CANCELED, i);
-            finish();
+            Snackbar.make(findViewById(android.R.id.content), "La data no pot quedar buida", Snackbar.LENGTH_LONG).show();
+            return;
         }
     }
 
@@ -120,7 +128,7 @@ public class stockManagerGestorArticles extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = "0" + day + "/" + "0" + (month+1) + "/" + year;
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
             }
         });

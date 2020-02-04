@@ -34,6 +34,15 @@
             android:id="@+id/linLayHistorial">
 
             <TextView
+                android:id="@+id/delFromData"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="X" />
+
+            <TextView
                 android:id="@+id/tvDataFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -43,6 +52,15 @@
                 android:hint="Des de"
                 android:textColorHint="@color/black"
                 android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/delToData"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="X" />
 
             <TextView
                 android:id="@+id/tvDataTo"

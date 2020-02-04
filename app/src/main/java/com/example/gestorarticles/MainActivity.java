@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent i = new Intent(this, movimentsGestorArticles.class );
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Data");
         builder.setMessage("Dia dels moviments?");
@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(data, i);
+                return;
             }
         });
 
@@ -274,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = "0" + day + "/" + "0" + (month+1) + "/" + year;
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
                 i.putExtra("data", selectedDate);
                 startActivity(i);

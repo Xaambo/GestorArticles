@@ -114,7 +114,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = "0" + day + "/" + "0" + (month+1) + "/" + year;
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
                 extras.putString("data", selectedDate);
                 carregaMoviments(extras);
@@ -133,7 +133,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
     private Cursor carregaCursor(Bundle extras) {
         Cursor cursorMoviments;
 
-        if (extras.size() == 1) {
+        if (extras.size() <= 1) {
 
             String data = extras.getString("data");
 
@@ -147,15 +147,16 @@ public class movimentsGestorArticles extends AppCompatActivity {
 
             String dataFrom = extras.getString("dataFrom");
             String dataTo = extras.getString("dataTo");
+            String codiArticle = extras.getString("codiArticle");
 
-            if (dataFrom == null && dataTo == null) {
+            if (dataFrom.equals("") && dataTo.equals("")) {
                 cursorMoviments = bd.moviments();
-            } else if (dataTo == null) {
-                cursorMoviments = bd.movimentsDesDeData(dataFrom);
-            } else if (dataFrom == null) {
-                cursorMoviments = bd.movimentsFinsAData(dataTo);
+            } else if (dataTo.equals("")) {
+                cursorMoviments = bd.movimentsDesDeData(dataFrom, codiArticle);
+            } else if (dataFrom.equals("")) {
+                cursorMoviments = bd.movimentsFinsAData(dataTo, codiArticle);
             } else {
-                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
+                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo, codiArticle);
             }
         }
 

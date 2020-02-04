@@ -36,6 +36,13 @@ public class detallArticle extends AppCompatActivity {
 
         setTitle("Article");
 
+        // Busquem el id que estem modificant
+        // si el el id es -1 vol dir que s'està creant
+        idArticle = this.getIntent().getExtras().getLong("id");
+
+        // Cridem a la funció que busca un únic article
+        final Cursor datos = bd.article(idArticle);
+
         // TV dataFrom
         final TextView tvDataFrom = findViewById(R.id.tvDataFrom);
         tvDataFrom.setFocusable(false);
@@ -60,6 +67,25 @@ public class detallArticle extends AppCompatActivity {
             }
         });
 
+        // Borrar Data
+        TextView tv = findViewById(R.id.delToData);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvDataTo.setText(null);
+                tvDataTo.setHint("Fins a");
+            }
+        });
+
+        tv = findViewById(R.id.delFromData);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvDataFrom.setText(null);
+                tvDataFrom.setHint("Des de");
+            }
+        });
+
         // TV que crida a l'activity
         final ImageView ivMoviment = findViewById(R.id.ivMoviments);
         ivMoviment.setFocusable(false);
@@ -67,7 +93,7 @@ public class detallArticle extends AppCompatActivity {
         ivMoviment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movimentsEntreDates(tvDataFrom.getText().toString(), tvDataTo.getText().toString());
+                movimentsEntreDates(tvDataFrom.getText().toString(), tvDataTo.getText().toString(), datos.getString(datos.getColumnIndex(GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE)));
             }
         });
 
@@ -101,13 +127,9 @@ public class detallArticle extends AppCompatActivity {
             }
         });
 
-        // Busquem el id que estem modificant
-        // si el el id es -1 vol dir que s'està creant
-        idArticle = this.getIntent().getExtras().getLong("id");
-
         if (idArticle != -1) {
             // Si estem modificant carreguem les dades en pantalla
-            carregarDadesArticle();
+            carregarDadesArticle(datos);
         }
         else {
             // Si estem creant amaguem el checkbox de finalitzada i el botó d'eliminar
@@ -121,11 +143,12 @@ public class detallArticle extends AppCompatActivity {
         }
     }
 
-    private void movimentsEntreDates(String dataFrom, String dataTo) {
+    private void movimentsEntreDates(String dataFrom, String dataTo, String article) {
 
         Intent i = new Intent(this, movimentsGestorArticles.class);
         i.putExtra("dataFrom", dataFrom);
         i.putExtra("dataTo", dataTo);
+        i.putExtra("codiArticle", article);
 
         startActivity(i);
     }
@@ -146,7 +169,7 @@ public class detallArticle extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = "0" + day + "/" + "0" + (month+1) + "/" + year;
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
             }
         });
@@ -154,16 +177,14 @@ public class detallArticle extends AppCompatActivity {
         picker.show(getSupportFragmentManager(), "datePicker");
     }
     
-    private void carregarDadesArticle() {
-
-        // Cridem a la funció que busca un únic article
-        Cursor datos = bd.article(idArticle);
-        datos.moveToFirst();
+    private void carregarDadesArticle(Cursor datos) {
 
         // Posem les dades en el detall ready per a ser modificades
         EditText edt;
         float preu;
         String desc;
+
+        datos.moveToFirst();
 
         edt = findViewById(R.id.edtCodiArticle);
         edt.setFocusable(false);
@@ -223,10 +244,24 @@ public class detallArticle extends AppCompatActivity {
         }
 
         edt = findViewById(R.id.edtStock);
-        int stock = Integer.valueOf(edt.getText().toString());
+        int stock;
+
+        try {
+            stock = Integer.valueOf(edt.getText().toString());
+        } catch (Exception e) {
+            Snackbar.make(findViewById(android.R.id.content), "El stock no és correcte", Snackbar.LENGTH_LONG).show();
+            return;
+        }
 
         edt = findViewById(R.id.edtPreu);
-        float preu = Float.valueOf(edt.getText().toString());
+        float preu;
+
+        try {
+            preu = Float.valueOf(edt.getText().toString());
+        } catch (Exception e) {
+            Snackbar.make(findViewById(android.R.id.content), "El preu no és correcte", Snackbar.LENGTH_LONG).show();
+            return;
+        }
 
         // Mirem si estem creant o estem guardant
         if (idArticle == -1) {
