@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private GestorArticlesDataSource bd;
     private adapterGestorArticles scArticles;
     private filtreArticles filterActual;
+
+    private AlertDialog alert;
 
     private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_CODIARTICLE, GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.GESTORARTICLES_STOCK};
     private static int[] to = new int[]{R.id.tvCodiArticle, R.id.tvDescripcio, R.id.tvNumUnitats};
@@ -163,8 +167,8 @@ public class MainActivity extends AppCompatActivity {
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alert.dismiss();
                 showDatePickerDialog(data, i);
-                return;
             }
         });
 
@@ -192,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setNegativeButton("Cancel", null);
 
-        builder.show();
+        alert = builder.show();
     }
 
     private void actualitzarArticle(long id) {
@@ -271,11 +275,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog(final EditText edtDatePicker, final Intent i) {
-        DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+        final DatePickerFragment picker = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                month = month + 1;
+
+                String formatedDay = String.valueOf(day);
+                String formatedMonth = String.valueOf(month);
+
+                if (day < 10) {
+                    formatedDay = "0" + day;
+                }
+
+                if (month < 10) {
+                    formatedMonth = "0" + month;
+                }
+
+                final String selectedDate = formatedDay + "/" + formatedMonth + "/" + year;
                 edtDatePicker.setText(selectedDate);
                 i.putExtra("data", selectedDate);
                 startActivity(i);
@@ -284,4 +301,50 @@ public class MainActivity extends AppCompatActivity {
 
         picker.show(getSupportFragmentManager(), "datePicker");
     }
+
+    /*private class myCustomAlertDialog extends AlertDialog {
+
+        protected myCustomAlertDialog(Context context) {
+            super(context);
+
+            setTitle("Data");
+            setMessage("Dia dels moviments?");
+
+            final EditText data = new EditText(MainActivity.this);
+            data.setFocusable(false);
+            data.setClickable(true);
+            data.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    showDatePickerDialog(data, i);
+                }
+            });
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+            data.setGravity(Gravity.CENTER);
+
+            data.setLayoutParams(lp);
+            setView(data);
+
+            setNeutralButton("Veure tot", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    i.putExtra("data", (Parcelable[]) null);
+                    startActivity(i);
+                }
+            });
+
+            setPositiveButton("Día", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    showDatePickerDialog(data, i);
+                }
+            });
+
+            setNegativeButton("Cancel", null);
+        }
+
+    }*/
 }

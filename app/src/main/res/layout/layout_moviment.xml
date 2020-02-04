@@ -21,7 +21,7 @@
                 android:id="@+id/headerCodiArticle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripció: "
+                android:text="Art. descripció: "
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
 
@@ -68,7 +68,7 @@
                 android:id="@+id/headerData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data: "
+                android:text="Data moviment: "
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
 

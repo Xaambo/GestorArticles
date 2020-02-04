@@ -24,6 +24,8 @@ public class movimentsGestorArticles extends AppCompatActivity {
     private GestorArticlesDataSource bd;
     private adapterMovimentsGestorArticles scMoviments;
 
+    private AlertDialog alert;
+
     private static String[] from = new String[]{GestorArticlesDataSource.GESTORARTICLES_DESCRIPCION, GestorArticlesDataSource.MOVIMENTS_DIA, GestorArticlesDataSource.MOVIMENTS_QUANTITAT, GestorArticlesDataSource.MOVIMENTS_TIPUS};
     private static int[] to = new int[]{R.id.tvDescripcioArticle, R.id.tvData, R.id.tvNumUnitats, R.id.tvTipusMoviment};
 
@@ -79,6 +81,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alert.dismiss();
                 showDatePickerDialog(data, extras);
             }
         });
@@ -106,7 +109,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
 
         builder.setNegativeButton("Cancel", null);
 
-        builder.show();
+        alert = builder.show();
     }
 
     private void showDatePickerDialog(final EditText edtDatePicker, final Bundle extras) {
@@ -114,7 +117,20 @@ public class movimentsGestorArticles extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                month = month + 1;
+
+                String formatedDay = String.valueOf(day);
+                String formatedMonth = String.valueOf(month);
+
+                if (day < 10) {
+                    formatedDay = "0" + day;
+                }
+
+                if (month < 10) {
+                    formatedMonth = "0" + month;
+                }
+
+                final String selectedDate = formatedDay + "/" + formatedMonth + "/" + year;
                 edtDatePicker.setText(selectedDate);
                 extras.putString("data", selectedDate);
                 carregaMoviments(extras);

@@ -128,7 +128,20 @@ public class stockManagerGestorArticles extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                month = month + 1;
+
+                String formatedDay = String.valueOf(day);
+                String formatedMonth = String.valueOf(month);
+
+                if (day < 10) {
+                    formatedDay = "0" + day;
+                }
+
+                if (month < 10) {
+                    formatedMonth = "0" + month;
+                }
+
+                final String selectedDate = formatedDay + "/" + formatedMonth + "/" + year;
                 edtDatePicker.setText(selectedDate);
             }
         });
