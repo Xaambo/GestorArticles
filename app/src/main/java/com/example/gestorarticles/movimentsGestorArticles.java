@@ -114,7 +114,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                final String selectedDate = "0" + day + "/" + "0" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
                 extras.putString("data", selectedDate);
                 carregaMoviments(extras);
