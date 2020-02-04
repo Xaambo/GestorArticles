@@ -67,21 +67,21 @@ public class GestorArticlesDataSource {
 
     public Cursor movimentsEntreDates(String dataFrom, String dataTo, String codiArticle) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE (dia >= ? AND dia <=?) AND gestorarticles.codiarticle = ?";
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE (date(dia) BETWEEN date(?) AND date(?)) AND gestorarticles.codiarticle = ?";
         String[] args = new String[] {dataFrom, dataTo, codiArticle};
         return dbR.rawQuery(query, args);
     }
 
     public Cursor movimentsFinsAData(String dataTo, String codiArticle) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia <= ? AND gestorarticles.codiarticle = ?";
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE date(dia) <= date(?) AND gestorarticles.codiarticle = ?";
         String[] args = new String[] {dataTo, codiArticle};
         return dbR.rawQuery(query, args);
     }
 
     public Cursor movimentsDesDeData(String dataFrom, String codiArticle) {
         /* Consulta dels moviments */
-        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE dia >= ? AND gestorarticles.codiarticle = ?";
+        String query = "SELECT moviments._id, descripcio, quantitat, dia, tipus FROM moviments INNER JOIN gestorarticles ON moviments.codiarticle = gestorarticles.codiarticle WHERE date(?) <= date(dia) AND gestorarticles.codiarticle = ?";
         String[] args = new String[] {dataFrom, codiArticle};
         return dbR.rawQuery(query, args);
     }

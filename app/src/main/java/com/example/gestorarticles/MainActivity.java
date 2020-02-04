@@ -292,7 +292,8 @@ public class MainActivity extends AppCompatActivity {
                     formatedMonth = "0" + month;
                 }
 
-                final String selectedDate = formatedDay + "/" + formatedMonth + "/" + year;
+                //final String selectedDate = formatedDay + "/" + formatedMonth + "/" + year;
+                final String selectedDate = year + "-" + formatedMonth + "-" + formatedDay;
                 edtDatePicker.setText(selectedDate);
                 i.putExtra("data", selectedDate);
                 startActivity(i);
