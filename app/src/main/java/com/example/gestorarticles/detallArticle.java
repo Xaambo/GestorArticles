@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -111,6 +112,12 @@ public class detallArticle extends AppCompatActivity {
         else {
             // Si estem creant amaguem el checkbox de finalitzada i el botó d'eliminar
             btnDelete.setVisibility(View.GONE);
+
+            LinearLayout linLay = findViewById(R.id.linLayHistorial);
+            linLay.setVisibility(View.GONE);
+
+            TextView tvHistory = findViewById(R.id.tvHeaderHistorial);
+            tvHistory.setVisibility(View.GONE);
         }
     }
 

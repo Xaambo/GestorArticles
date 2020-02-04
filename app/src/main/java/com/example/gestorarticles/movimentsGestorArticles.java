@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -57,7 +58,8 @@ public class movimentsGestorArticles extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnSelectDia:
-                actualitzarMoviments(getIntent().getExtras());
+                Bundle extras = new Bundle();
+                actualitzarMoviments(extras);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -114,6 +116,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
                 // +1 because January is zero
                 final String selectedDate = day + "/" + (month+1) + "/" + year;
                 edtDatePicker.setText(selectedDate);
+                extras.putString("data", selectedDate);
                 carregaMoviments(extras);
             }
         });
@@ -130,7 +133,7 @@ public class movimentsGestorArticles extends AppCompatActivity {
     private Cursor carregaCursor(Bundle extras) {
         Cursor cursorMoviments;
 
-        if (extras.size() > 1) {
+        if (extras.size() == 1) {
 
             String data = extras.getString("data");
 
@@ -148,9 +151,9 @@ public class movimentsGestorArticles extends AppCompatActivity {
             if (dataFrom == null && dataTo == null) {
                 cursorMoviments = bd.moviments();
             } else if (dataTo == null) {
-                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
+                cursorMoviments = bd.movimentsDesDeData(dataFrom);
             } else if (dataFrom == null) {
-                cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
+                cursorMoviments = bd.movimentsFinsAData(dataTo);
             } else {
                 cursorMoviments = bd.movimentsEntreDates(dataFrom, dataTo);
             }
