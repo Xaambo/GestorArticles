@@ -105,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnHistory:
                 veureMoviments();
                 return true;
+            case R.id.btnWeather:
+                veureTemps();
+                return true;
             case R.id.noFiltre:
                 filtreOff();
                 return true;
@@ -117,6 +120,12 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void veureTemps() {
+
+        Intent i = new Intent(this, detailWeather.class );
+        startActivity(i);
     }
 
     @Override

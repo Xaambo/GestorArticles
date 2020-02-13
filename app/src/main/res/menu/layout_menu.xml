@@ -6,13 +6,20 @@
         android:id="@+id/btnAdd"
         android:title="ADD"
         android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/btnHistory"
         android:title="HISTORY"
         android:icon="@drawable/ic_import_export_black"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/btnWeather"
+        android:title="Weather"
+        android:icon="@drawable/ic_weather"
+        app:showAsAction="always" />
+
 
     <item
         android:id="@+id/filter"
