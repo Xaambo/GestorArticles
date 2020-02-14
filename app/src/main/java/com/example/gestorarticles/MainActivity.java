@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -124,8 +125,53 @@ public class MainActivity extends AppCompatActivity {
 
     private void veureTemps() {
 
-        Intent i = new Intent(this, detailWeather.class );
-        startActivity(i);
+        final Intent i = new Intent(this, detailWeather.class );
+
+        final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(findViewById(android.R.id.content))
+                .setTitle("Temps")
+                .setMessage("De quina ciutat vols veure el temps?")
+                .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+
+        final EditText data = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        data.setGravity(Gravity.CENTER);
+
+        data.setLayoutParams(lp);
+        dialog.setView(data);
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+
+                        String ciutat = data.getText().toString();
+
+                        if (!ciutat.isEmpty()) {
+
+                            dialog.dismiss();
+
+                            i.putExtra("ciutat", ciutat);
+                            startActivity(i);
+                        } else {
+                            Dialogs.showInformacion(MainActivity.this, "No has posat cap ciutat");
+                        }
+                    }
+                });
+            }
+        });
+        dialog.show();
     }
 
     @Override
