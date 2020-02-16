@@ -9,20 +9,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:layout_marginLeft="10sp"
+            android:layout_marginStart="10sp">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="262dp"
-                android:layout_height="261dp"
-                app:srcCompat="@drawable/ic_weather" />
+                android:id="@+id/ivIconWeather"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
+                android:layout_margin="10sp" />
 
             <TextView
-                android:id="@+id/tvPais"
+                android:id="@+id/tvCiutat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="TextView"
-                android:textSize="40dp" />
+                android:layout_margin="10sp"
+                android:textColor="@color/black"
+                android:text="Ciutat: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvTemperatura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:textColor="@color/black"
+                android:text="0ºC - 0/0ºC"
+                android:textSize="40sp"/>
+
+
+            <TextView
+                android:id="@+id/tvHumitat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:textColor="@color/black"
+                android:text="Humitat: "
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/tvVisibilitat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:textColor="@color/black"
+                android:text="Pressió: "
+                android:textSize="20sp"/>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp"
+                android:layout_marginRight="20sp"/>
         </LinearLayout>
 </ScrollView>
